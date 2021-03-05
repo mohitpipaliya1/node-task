@@ -1,5 +1,6 @@
 var userModel = require("../model/userModel");
 var Address = require("../model/address");
+
 const addUser = async (req, res) => {
   var data = new userModel({
     name: req.body.name,
@@ -11,7 +12,8 @@ const addUser = async (req, res) => {
 
   try {
     const newUser = await data.save();
-    res.status(201).json({ newUser });
+    const token = await user.generateAuthToken()
+    res.status(201).json({ newUser,token });
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
@@ -44,5 +46,18 @@ const getUser = async (req, res) => {
     .exec();
   res.send({ data: userData });
 };
+
+// const user = async(req,res) =>{
+//       try{
+//        const user = await UserModel.findByCredentials(req.body.email,req.body.password)
+//       console.log(user)
+//       res.send(user);
+//       }
+//       catch(e)
+//       {
+//         res.status(400).send(e);
+//       }
+
+// }
 
 module.exports = { addUser, getUser, addAddress };

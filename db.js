@@ -1,7 +1,9 @@
 const mongoose = require("mongoose");
 
+
+
 mongoose.connect(
-  "mongodb://localhost:27017/DemoTask",
+  process.env.MONGODB,
   { useNewUrlParser: true, useUnifiedTopology: true },
   () => {
     console.log("Database connected succesfully");
